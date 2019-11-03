@@ -3,10 +3,11 @@
 import sys
 
 def main():
- # TODO(sjv): This needs to be refactored - this is dirt but gets the job done
+ # TODO(sjv): This needs to be refactored - this is dirty but gets the job done
  # NOTE(sjv): { "paramName": (IsThisRequired, NextArgSetToThis) } 
  success, options = parse_args({"--in": (True, True), "--out": (False, True), "--print": (False, False)})
  if not success: 
+   print(options)
    print(print_command_line_options())
  else: 
    print(options)
@@ -29,6 +30,7 @@ def parse_args(arguments):
         for parg in positional_args:
           print(f"Positional arg {parg} found in the middle of the command.")
         success = False
+        positional_args = []
 
       _, req_second_arg  = arguments[arg]
       val = None
@@ -40,7 +42,7 @@ def parse_args(arguments):
             success = False
           else:
             val = sec_arg
-            index = index + 1
+            index += 1 
         else:
           print(f"{arg} requires an argument")
           success = False
@@ -56,7 +58,7 @@ def parse_args(arguments):
       print(f"{arg} is an unknown options")
       success = False
 
-    index = index + 1
+    index += 1 
   
   for req_key in (k for k, v in arguments.items() if v[0]):
     print(f"{req_key} is a required argument")

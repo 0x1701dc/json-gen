@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
 import sys
 
@@ -27,7 +27,7 @@ def parse_args(arguments):
 
     index = index + 1
   
-  for req_key in (k for k in arguments.keys() if k):
+  for req_key in (k for k, v in arguments.items() if v):
     print(f"{req_key} is a required argument")
     return False, arguments_out
 

@@ -1,22 +1,6 @@
-#!/usr/bin/env python3
-
 import sys
 
-def main():
- # TODO(sjv): This needs to be refactored - this is dirty but gets the job done
- # NOTE(sjv): { "paramName": (IsThisRequired, NextArgSetToThis) } 
- success, options = parse_args({"--in": (True, True), "--out": (False, True), "--print": (False, False)})
- if not success: 
-   print(options)
-   print(print_command_line_options())
- else: 
-   print(options)
-
-def print_command_line_options():
-  # TODO(sjv): Build this up from the args dict we are using above
-  return f"{sys.argv[0]}: --options go --here file"
-
-def parse_args(arguments):
+def parse_arguments(arguments):
   success = True
   index = 1 
   arguments_out = {}
@@ -67,6 +51,3 @@ def parse_args(arguments):
   arguments_out["positional_args"] = positional_args
 
   return success, arguments_out 
-
-if __name__ == '__main__':
-  main()

@@ -19,9 +19,17 @@ def parse_args(arguments):
   success = True
   index = 1 
   arguments_out = {}
+  positional_args = []
   while index < len(sys.argv):
     arg = sys.argv[index]
-    if arg in arguments:
+    if not arg.startswith("--"):
+      positional_args.append(arg)
+    elif arg in arguments:
+      if len(positional_args) > 0:
+        for parg in positional_args:
+          print(f"Positional arg {parg} found in the middle of the command.")
+        success = False
+
       _, req_second_arg  = arguments[arg]
       val = None
       if req_second_arg:
@@ -53,6 +61,8 @@ def parse_args(arguments):
   for req_key in (k for k, v in arguments.items() if v[0]):
     print(f"{req_key} is a required argument")
     success = False
+    
+  arguments_out["positional_args"] = positional_args
 
   return success, arguments_out 
 
